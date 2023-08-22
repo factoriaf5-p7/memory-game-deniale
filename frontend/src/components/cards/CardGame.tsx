@@ -27,7 +27,7 @@ export const CardGame =  ({
       
       <Row>
         <Card data-testid="card" onClick={() => onCardClicked(index)}
-          className="card"
+          className="card col-md-10 mb-10"
           key={`${index}`}>
             <Card.Body>
               {/* <Card.Title>{game.name}</Card.Title>

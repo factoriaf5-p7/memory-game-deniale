@@ -1,3 +1,4 @@
+import { Col, Row } from "react-bootstrap";
 import { CardGame, CardType } from "./CardGame";
 
 type CardsContainerProps = {
@@ -6,12 +7,15 @@ type CardsContainerProps = {
   };
 
   export const CardContainer = ({ cards, onCardClicked }: CardsContainerProps) => (
-    <div className="cards-container">
+            
+    <Row xs={1} md={6} className="g-4">
       {cards.map((card) => (
-        <CardGame
-          onCardClicked={onCardClicked}
-          card={card}
-        />
+        <Col key={card.index}>
+                <CardGame
+                onCardClicked={onCardClicked}
+                card={card}
+                />
+        </Col>
       ))}
-    </div>
+    </Row>
   );

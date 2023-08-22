@@ -5,6 +5,7 @@ import axios from "axios";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Image from "react-bootstrap/Image";
+import { shuffle } from '@vitest/utils';
 
 interface Card {
   _id: string;
@@ -20,7 +21,10 @@ export const CardGame = () => {
     axios
       .get("http://localhost:3000/game")
       .then((response) => {
-        setGames(response.data);
+        const fetchedGames = response.data;
+        const duplicatedGames = [...fetchedGames, ...fetchedGames];
+        const shuffledGames = shuffle(duplicatedGames);
+        setGames(shuffledGames);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -35,8 +39,8 @@ export const CardGame = () => {
           <div key={game._id} className="col-md-4 mb-4">
             <Card data-testid="card">
               <Card.Body>
-                <Card.Title>{game.name}</Card.Title>
-                <Card.Text>Category: {game.category}</Card.Text>
+                {/* <Card.Title>{game.name}</Card.Title>
+                <Card.Text>Category: {game.category}</Card.Text> */}
                 <Image
                   src={game.url}
                 >

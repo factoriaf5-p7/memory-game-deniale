@@ -3,11 +3,12 @@ import { Button } from 'react-bootstrap';
 
 interface ButtonProps {
   children: string;
+  onClick?: () => void;
 }
 
-export const PrimaryButton: React.FC<ButtonProps> = ({ children }) => {
+export const PrimaryButton: React.FC<ButtonProps> = ({ children,onClick }) => {
   return (
-    <Button variant="primary">
+    <Button variant="primary" onClick={onClick}>
       {children}
     </Button>
   );

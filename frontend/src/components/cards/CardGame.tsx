@@ -26,18 +26,24 @@ export const CardGame =  ({
     <Container className="mt-4">
       
       <Row>
-        <Card data-testid="card" onClick={() => onCardClicked(index)}
+        <Card data-testid="card-front" onClick={() => onCardClicked(index)}
           className="card col-md-10 mb-10"
           key={`${index}`}>
-            <Card.Body>
-              {/* <Card.Title>{game.name}</Card.Title>
-              <Card.Text>Category: {game.category}</Card.Text> */}
               <Image
                 src={url}
               >
               </Image>
-            </Card.Body>
+             
           </Card>
+          <Card data-testid="card" onClick={() => onCardClicked(index)}
+          className="card-back col-md-10 mb-8">
+              <Image
+                src="https://niltonnavarro.com/wp-content/uploads/2019/05/frases-superherores-motivacion-marca-personal-superacion-nilton-navarro-blog-que-es-la-marca-personal-1024x709.jpg.webp" height={'120px'}
+              >
+              </Image>
+             
+          </Card>
+          
       </Row>
     </Container>
   );

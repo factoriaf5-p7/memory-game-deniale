@@ -1,1 +1,31 @@
+
+$blue: #5DA9E9;
+$indigo: #003F91;
+$purple: #7B8CDE;
+$pink: #DC0073;
+$red: #FF101F;
+$orange: #5DA9E9;
+$yellow: #E4FF1A;
+$green: #89FC00;
+$teal: #5DA9E9;
+$cyan: #fefae0;
+$primary: #FFE66D;
+$secondary: #E28413;
+$success: #5448C8;
+$info: #4ECDC4;
+$warning: #04E762;
+$danger: #DE3C4B;
+$light: #89FC00;
+$dark: #000022;
+
+$color-mode-type: data;
+
+:root[data-bs-theme="light"]{
+  --bs-body-bg: var(--bs-primary)
+}
+
+:root[data-bs-theme="dark"]{
+    --bs-body-bg: var(--bs-dark)
+  }
+
 @import "node_modules/bootstrap/scss/bootstrap";

@@ -19,7 +19,7 @@ interface Card {
 export const CardGame = () => {
   const [games, setGames] = useState<Card[]>([]);
   const [turns, setTurns] = useState(0);
-  const [showCongratulationsModal, setShowCongratulationsModal] = useState(true);
+  const [showCongratulationsModal, setShowCongratulationsModal] = useState(false);
 
   useEffect(() => {
     axios

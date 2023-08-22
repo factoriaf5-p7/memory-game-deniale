@@ -3,6 +3,7 @@
 import Card from 'react-bootstrap/Card';
 
 export const CardGame = () => {
+  
   return (
 
 

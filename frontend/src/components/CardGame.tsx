@@ -6,6 +6,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Image from "react-bootstrap/Image";
 import { shuffle } from '@vitest/utils';
+import { ModalEnding } from "./ModalEnding";
 
 interface Card {
   _id: string;
@@ -16,6 +17,7 @@ interface Card {
 
 export const CardGame = () => {
   const [games, setGames] = useState<Card[]>([]);
+  const [showCongratulationsModal, setShowCongratulationsModal] = useState(true);
 
   useEffect(() => {
     axios
@@ -50,6 +52,8 @@ export const CardGame = () => {
           </div>
         ))}
       </Row>
+      <ModalEnding  show={showCongratulationsModal}
+        onClose={() => setShowCongratulationsModal(false)}/>
     </Container>
   );
 };

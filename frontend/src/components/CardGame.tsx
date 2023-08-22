@@ -5,7 +5,7 @@ import axios from "axios";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Image from "react-bootstrap/Image";
-import { shuffle } from '@vitest/utils';
+import { PrimaryButton } from "./buttons/PrimaryButton";
 import { ModalEnding } from "./ModalEnding";
 
 interface Card {
@@ -15,8 +15,10 @@ interface Card {
   category: string;
 }
 
+
 export const CardGame = () => {
   const [games, setGames] = useState<Card[]>([]);
+  const [turns, setTurns] = useState(0);
   const [showCongratulationsModal, setShowCongratulationsModal] = useState(true);
 
   useEffect(() => {
@@ -24,18 +26,27 @@ export const CardGame = () => {
       .get("http://localhost:3000/game")
       .then((response) => {
         const fetchedGames = response.data;
-        const duplicatedGames = [...fetchedGames, ...fetchedGames];
-        const shuffledGames = shuffle(duplicatedGames);
-        setGames(shuffledGames);
+        
+      const shuffledGames = () => {
+        const duplicatedGames = [...fetchedGames, ...fetchedGames]
+          .sort(( ) => Math.random() - 0.5)
+          .map((game)=>({ ...game, idUnique: Math.random()}));
+
+          setGames(duplicatedGames);
+          setTurns(0);
+        }
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   }, []);
 
+  console.log(games,turns)
+
   return (
     <Container className="mt-4">
       <h1>Game Cards</h1>
+      <PrimaryButton> Start</PrimaryButton>
       <Row>
         {games.map((game) => (
           <div key={game._id} className="col-md-4 mb-4">

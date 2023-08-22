@@ -1,7 +1,7 @@
 import { describe, it, } from 'vitest';
 import {Landing} from '../../pages/Landing'
 import { render, screen } from '@testing-library/react';
-
+import {expect} from "vitest"
 
 describe('Landing', () => {
   it('renders the landing button', () => {

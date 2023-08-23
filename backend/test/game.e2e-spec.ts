@@ -6,6 +6,7 @@ import { getModelToken } from '@nestjs/mongoose';
 import { Game } from 'src/game/schemas/game.schema';
 import { GameModule } from '../src/game/game.module';
 import { GameService } from 'src/game/game.service';
+
 const games:  Array<{ _id: mongoose.Types.ObjectId } & Game> = [
     {
       _id: new mongoose.Types.ObjectId('64e3dd89f60d71c3f642eb73'),
@@ -13,15 +14,26 @@ const games:  Array<{ _id: mongoose.Types.ObjectId } & Game> = [
       url: 'https://res.cloudinary.com/dqlu4lleo/image/upload/v1692624731/superhero-game/rw0z9tbtfdjkr5ht5u1m.jpg',
       category: "superhero"
     },
+    {
+      _id: new mongoose.Types.ObjectId('64e3dd89f60d71c3f642eb73'),
+      name: 'superman',
+      url: 'https://res.cloudinary.com/dqlu4lleo/image/upload/v1692624731/superhero-game/rw0z9tbtfdjkr5ht5u1m.jpg',
+      category: "superhero"
+    }, 
+    {
+      _id: new mongoose.Types.ObjectId('64e3dd89f60d71c3f642eb73'),
+      name: 'nest',
+      url: 'https://res.cloudinary.com/dqlu4lleo/image/upload/v1692624731/superhero-game/rw0z9tbtfdjkr5ht5u1m.jpg',
+      category: "programming"
+    },
   ];
   
 
 describe('Game (e2e)', () => {
   let app: INestApplication;
   const mockGameModel = {
-    find: jest.fn().mockImplementationOnce(() => ({
-      exec: jest.fn().mockResolvedValue({ games }),
-    })),
+    find: jest.fn().mockReturnThis(),
+    exec: jest.fn(),
     findById: jest.fn().mockResolvedValue(games[0]),
   };
 
@@ -38,13 +50,26 @@ describe('Game (e2e)', () => {
   });
 
   it('/game (GET)', async () => {
-   const response = await request(app.getHttpServer()).get('/game');
+    mockGameModel.find.mockReturnThis(); 
+    mockGameModel.exec.mockResolvedValue(games);
+    const response = await request(app.getHttpServer()).get('/game');
 
-    expect(response.statusCode).toBe(200);
-    expect(JSON.stringify(response.body.games)).toBe(
-      JSON.stringify(games),
- ) });
- 
+    expect(response.statusCode).toBe(HttpStatus.OK);
+    expect(response.body).toEqual(JSON.parse(JSON.stringify(games)));
+  });
+
+  it('/game (GET) with category', async () => {
+    const category = 'superhero';
+    const filteredGames = games.filter(game => game.category === category);
+  
+    mockGameModel.exec.mockResolvedValueOnce(filteredGames);
+  
+    const response = await request(app.getHttpServer()).get('/game').query({ category });
+  
+    expect(response.statusCode).toBe(HttpStatus.OK);
+    expect(response.body).toEqual(JSON.parse(JSON.stringify(filteredGames)));
+  });
+
  it('/game/:id (GET)', async () => {
   const gameId = '64e3dd89f60d71c3f642eb73';
 

@@ -7,8 +7,10 @@ import { Game } from './schemas/game.schema';
 export class GameService {
   constructor(@InjectModel(Game.name) private gameModel: Model<Game>) {}
 
-  async findAll() {
-    return await this.gameModel.find().exec();
+  async findAll(category?: string) {
+    const query = category ? { category } : {}; // Create the query object based on the category parameter
+    
+    return await this.gameModel.find(query).exec();
   }
 
   async findOne(id: ObjectId) {

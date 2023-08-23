@@ -8,8 +8,8 @@ export class GameController {
 
 
   @Get()
- async findAll() {
-    return await this.gameService.findAll();
+  async findAll(@Query('category') category?: string) {
+    return await this.gameService.findAll(category);
   }
 
    @Get(':id')

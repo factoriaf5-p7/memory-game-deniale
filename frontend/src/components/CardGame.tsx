@@ -39,10 +39,10 @@ const {
   return (
     <Container className="mt-4">
       <h1 className="text-center">Memory Card Game</h1>
-      <PrimaryButton onClick={restartGame}>Start</PrimaryButton>
+      <PrimaryButton onClick={resetGame}>Reset</PrimaryButton>
       <MoveCounter moves={moves} />
       <HighScore bestScore={bestScore} />
-      <Row xs={2} md={4} className="g-4">
+      <Row xs={2} md={4} className="g-4" data-testid="card">
         {cards.map((card, index) => (
           <Col key={index}>
             <Card

@@ -35,9 +35,23 @@ describe('GameController', () => {
     expect(controller).toBeDefined();
   });
 
+ 
   it('should return all the game cards', async () => {
-    expect(await controller.findAll()).toMatchObject({ games });
+    const response = await controller.findAll();
+    expect(response).toMatchObject({ games });
+    expect(mockGameService.findAll).toHaveBeenCalledWith(undefined); // No category specified
   });
+
+  it('should return all the game cards filtered by category', async () => {
+    const category = 'superhero'; 
+    const filteredGames = [games[0]];
+    mockGameService.findAll.mockResolvedValueOnce(filteredGames);
+
+    const response = await controller.findAll(category);
+    expect(response).toMatchObject(filteredGames);
+    expect(mockGameService.findAll).toHaveBeenCalledWith(category);
+  });
+
   it('should return a game card by ID', async () => {
     const gameId =  new SchemaTypes.ObjectId('1');
     const expectedGame = {

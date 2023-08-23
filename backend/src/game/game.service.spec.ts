@@ -16,8 +16,8 @@ const games: Array<{ _id: ObjectId } & Game> = [
 describe('GameService', () => {
   let service: GameService;
   const mockGameModel = {
-    findAll: jest.fn().mockReturnValue({ exec: () => Promise.resolve(games) }),
-    findById: jest.fn()/* .mockResolvedValue(game) */
+    find: jest.fn(),
+    findById: jest.fn()
   }
 
   beforeEach(async () => {
@@ -36,8 +36,24 @@ describe('GameService', () => {
     expect(service).toBeDefined();
   });
 
-  it('findAll() should return the array "games"', async () => {
-    expect(await service.findAll()).toMatchObject(games);
+  it('should return all games', async () => {
+    mockGameModel.find.mockReturnValueOnce({ exec: jest.fn().mockResolvedValueOnce(games) });
+
+    const result = await service.findAll();
+
+    expect(result).toEqual(games);
+    expect(mockGameModel.find).toHaveBeenCalledWith({});
+  });
+
+  it('should return games filtered by category', async () => {
+    const category = 'superhero';
+    const filteredGames = games[0]
+    mockGameModel.find.mockReturnValueOnce({ exec: jest.fn().mockResolvedValueOnce(filteredGames) });
+
+    const result = await service.findAll(category);
+
+    expect(result).toEqual(filteredGames);
+    expect(mockGameModel.find).toHaveBeenCalledWith({ category });
   });
 
   it('findOne() should return a game by ID', async () => {

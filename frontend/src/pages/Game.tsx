@@ -1,4 +1,4 @@
-//opcional timer
+/* //opcional timer
 //grid level
 //logic, compair if there is a match and identify when there is only a pair missing to finish it
 import { useState } from "react";
@@ -19,7 +19,6 @@ export const Game = () => {
  return (
     <div>
       <h1>Game Cards</h1>
-      {/* Display game or play button */}
       {gameStarted ? (
         <>
           <div className="relative">
@@ -40,3 +39,12 @@ export const Game = () => {
     </div>
   );
 };
+ */
+
+import { CardGame } from "../components/CardGame"
+
+export const Game  = () => {
+return (
+  <CardGame/>
+)
+}

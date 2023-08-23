@@ -1,71 +1,74 @@
 //animacion al darle click
-import { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
-import axios from "axios";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Image from "react-bootstrap/Image";
 import { PrimaryButton } from "./buttons/PrimaryButton";
 import { ModalEnding } from "./ModalEnding";
+import Col from "react-bootstrap/Col";
+import { MoveCounter } from "./cards/MoveCounter";
+import { HighScore } from "./cards/HighScore";
+import { useCardGameLogic } from "../hooks/useCardGameLogic";
 
-interface Card {
+export interface CardData {
   _id: string;
   name: string;
   url: string;
   category: string;
 }
 
+export interface Card extends CardData {
+  flipped: boolean;
+  matched: boolean;
+}
 
 export const CardGame = () => {
-  const [games, setGames] = useState<Card[]>([]);
-  const [turns, setTurns] = useState(0);
-  const [showCongratulationsModal, setShowCongratulationsModal] = useState(false);
+const {
+    cards,
+    gameOver,
+    showCongratulationsModal,
+    moves,
+    bestScore,
+    handleClick,
+    restartGame,
+    resetGame
+  } = useCardGameLogic();
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/game")
-      .then((response) => {
-        const fetchedGames = response.data;
-        
-      const shuffledGames = () => {
-        const duplicatedGames = [...fetchedGames, ...fetchedGames]
-          .sort(( ) => Math.random() - 0.5)
-          .map((game)=>({ ...game, idUnique: Math.random()}));
 
-          setGames(duplicatedGames);
-          setTurns(0);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
-
-  console.log(games,turns)
-
+  
   return (
     <Container className="mt-4">
-      <h1>Game Cards</h1>
-      <PrimaryButton> Start</PrimaryButton>
-      <Row>
-        {games.map((game) => (
-          <div key={game._id} className="col-md-4 mb-4">
-            <Card data-testid="card">
-              <Card.Body>
-                {/* <Card.Title>{game.name}</Card.Title>
-                <Card.Text>Category: {game.category}</Card.Text> */}
-                <Image
-                  src={game.url}
+      <h1 className="text-center">Memory Card Game</h1>
+      <PrimaryButton onClick={restartGame}>Start</PrimaryButton>
+      <MoveCounter moves={moves} />
+      <HighScore bestScore={bestScore} />
+      <Row xs={2} md={4} className="g-4">
+        {cards.map((card, index) => (
+          <Col key={index}>
+            <Card
+              className={`game-card ${card.flipped ? "flipped" : ""}`}
+              onClick={() => handleClick(index)}
+            >
+              <Card.Body className="d-flex justify-content-center align-items-center">
+                <div
+                  className={`card-content ${card.flipped ? "flipped" : ""} `}
                 >
-                </Image>
+                  {card.flipped ? (
+                    <Image src={card.url} className="card-image" />
+                  ) : (
+                    <div className="card-back">?</div>
+                  )}
+                </div>
               </Card.Body>
             </Card>
-          </div>
+          </Col>
         ))}
       </Row>
-      <ModalEnding  show={showCongratulationsModal}
-        onClose={() => setShowCongratulationsModal(false)}/>
+      {gameOver && (
+        <div className="text-center mt-4">
+          <ModalEnding show={showCongratulationsModal} onClose={() => resetGame()} />
+        </div>
+      )}
     </Container>
   );
 };
-

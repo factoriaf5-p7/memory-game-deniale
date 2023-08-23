@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+/* import { useEffect, useState } from "react";
 import { CardType } from "../components/cards/CardGame";
 import {useLocalStorage} from "./useLocalStorage";
 import axios from "axios";
@@ -14,9 +14,6 @@ type useGameType = [
 ];
 
 
-/**
- * Get score, cards, bestScore, click card
- */
 export const useGame = function (): useGameType {
   // States
   const [cardsClicked, setCardsClicked] = useState([] as number[]);
@@ -43,11 +40,6 @@ export const useGame = function (): useGameType {
 
   
 
-  /**
-   * This function returns the cards in a random order
-   */
-
-
   const clickCard = function (index: number) {
     if (cardsClicked.includes(index)) {
       reset();
@@ -69,3 +61,4 @@ export const useGame = function (): useGameType {
 
   return [score, games, clickCard, reset, Number(bestScore)];
 };
+ */

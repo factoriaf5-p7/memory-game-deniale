@@ -1,5 +1,5 @@
 import { describe, expect,test } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import {  render, screen } from '@testing-library/react';
 import { Game } from '../../pages/Game';
 
 describe('Game Component', () => {

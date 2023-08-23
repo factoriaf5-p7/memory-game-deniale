@@ -3,7 +3,7 @@
 import  Container  from "react-bootstrap/Container";
 import { ModalSettings } from "./ModalSettings";
 import { useCardGameLogic } from "../hooks/useCardGameLogic";
-import Navbar from "react-bootstrap/Navbar";
+import {Navbar} from "react-bootstrap";
 import Button from "react-bootstrap/Button"; 
 import { useState } from "react";
 

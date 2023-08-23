@@ -43,8 +43,8 @@ export const useCardGameLogic = () => {
 
   /********STARTING NEW GAME*********/
 
-  const startNewGame = () => {
-    axios.get("http://localhost:3000/game").then((response) => {
+  const startNewGame = (theme:string) => {
+    axios.get(`http://localhost:3000/game?category=${theme}`).then((response) => {
       const fetchedCards: CardData[] = response.data;
       const duplicatedCards = duplicateCards(fetchedCards);
       const shuffledAndDuplicatedCards = shuffleCards(duplicatedCards);
@@ -58,7 +58,7 @@ export const useCardGameLogic = () => {
   };
 
   useEffect(() => {
-    startNewGame(); // Automatically start a new game when the component mounts
+    startNewGame('superhero'); // Automatically start a new game when the component mounts
   }, []);
 
   /********RESET GAME AT THE END*********/

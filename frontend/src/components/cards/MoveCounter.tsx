@@ -3,6 +3,6 @@ interface MoveCounterProps {
   }
   
  export const MoveCounter = ({ moves }:  MoveCounterProps) => {
-    return <p className="text-center">Moves: {moves}</p>;
+    return <p className="text-center" data-testid="moves">Moves: {moves}</p>;
   };
   

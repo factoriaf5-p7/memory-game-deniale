@@ -4,6 +4,6 @@ interface HighScoreProps {
   
   export const HighScore = ({ bestScore }: HighScoreProps) => {
     return (
-      <p className="text-center best-score" data-testid="best-score">Best Score: {bestScore !== null ? bestScore : "-"}</p>
+      <p className="text-center best-score" data-testid="best-score">Best Score: {bestScore}</p>
     );
   };

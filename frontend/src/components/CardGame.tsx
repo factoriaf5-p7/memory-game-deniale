@@ -9,6 +9,7 @@ import Col from "react-bootstrap/Col";
 import { MoveCounter } from "./cards/MoveCounter";
 import { HighScore } from "./cards/HighScore";
 import { useCardGameLogic } from "../hooks/useCardGameLogic";
+import "../styles/CardGame.css"
 
 export interface CardData {
   _id: string;
@@ -37,12 +38,12 @@ const {
 
   
   return (
-    <Container className="mt-4">
+    <Container className="mt-4" style={({marginBottom: "2rem"})}>
       <h1 className="text-center">Memory Card Game</h1>
       <PrimaryButton onClick={resetGame}>Reset</PrimaryButton>
       <MoveCounter moves={moves} />
       <HighScore bestScore={bestScore} />
-      <Row xs={2} md={4} className="g-4" data-testid="card">
+      <Row sm={2} md={4} lg={6} className="g-4" data-testid="card">
         {cards.map((card, index) => (
           <Col key={index}>
             <Card
@@ -56,7 +57,9 @@ const {
                   {card.flipped ? (
                     <Image src={card.url} className="card-image" />
                   ) : (
-                    <div className="card-back">?</div>
+                    <Image src="https://res.cloudinary.com/dqlu4lleo/image/upload/v1692801956/superhero-game/zyxcxdkdmiixeydwlpf1.png" alt="Memory icon by Icons8
+
+                    "className="card-back"/>
                   )}
                 </div>
               </Card.Body>

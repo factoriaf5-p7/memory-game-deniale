@@ -58,7 +58,7 @@ export const useCardGameLogic = () => {
   };
 
   useEffect(() => {
-    startNewGame('superhero'); // Automatically start a new game when the component mounts
+    startNewGame('programming'); // Automatically start a new game when the component mounts
   }, []);
 
   /********RESET GAME AT THE END*********/
@@ -100,11 +100,10 @@ export const useCardGameLogic = () => {
       }
         /********SAVING BEST SCORE*********/
 
-      if (moves > Number(bestScore)) {
-        setBestScore(moves.toString());
-        localStorage.setItem("best-score", moves.toString());
-      }
-    }
+        if ( moves < Number(bestScore)) {
+          setBestScore(moves.toString());
+          localStorage.setItem("best-score", moves.toString());
+        } }
   };
 
   /********COMPARE CARDS *********/

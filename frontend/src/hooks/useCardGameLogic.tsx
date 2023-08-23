@@ -64,7 +64,7 @@ export const useCardGameLogic = () => {
   /********RESET GAME AT THE END*********/
 
 
-  const resetGame = () => {
+  const resetGame = (theme: string) => {
     const shuffledAndDuplicatedCards = shuffleCards(cards).map((card) => ({
       ...card,
       flipped: false,
@@ -74,6 +74,8 @@ export const useCardGameLogic = () => {
     setFlippedCards([]);
     setGameOver(false);
     setMoves(0);
+
+    startNewGame(theme);
   };
   
   /******** HANDLE CARD CLICK *********/

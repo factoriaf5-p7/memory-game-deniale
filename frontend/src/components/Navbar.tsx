@@ -6,3 +6,4 @@ export const Navbar = () => {
     <Container data-testid="navbar">Navbar</Container>
   )
 }
+

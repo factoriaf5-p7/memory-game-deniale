@@ -4,12 +4,9 @@ import { Game } from '../../pages/Game';
 
 describe('Game Component', () => {
   test('renders a button Reset ', () => {
-    const onClick = jest.fn(); // Create a mock function for the reset action
     render(<Game />);
     const buttonElement = screen.getByRole('button', { name: 'Reset' });
-
     expect(buttonElement).toBeInTheDocument();
-
     screen.debug();
   });
 
@@ -17,10 +14,7 @@ describe('Game Component', () => {
     render(<Game />);
 
     const card = screen.getByTestId('card');
-  
-
     expect(card).toBeInTheDocument();
-
     screen.debug();
     })
 
@@ -38,4 +32,3 @@ describe('Game Component', () => {
     })
   });
 
-  // Add more tests as needed

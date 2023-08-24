@@ -22,5 +22,12 @@ export const useLocalStorage = function (key: string): useLocalStorageType {
     localStorage.setItem(key, value);
   }, [value]);
 
+  useEffect(() => {
+    const storedValue = getValue(key);
+    if (storedValue !== value) {
+      setValue(storedValue);
+    }
+  }, [key]);
+
   return [value, setValue];
 };

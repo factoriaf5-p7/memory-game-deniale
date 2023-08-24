@@ -9,8 +9,8 @@ export const useCardGameLogic = () => {
   const [gameOver, setGameOver] = useState(false);
   const [showCongratulationsModal, setShowCongratulationsModal] =
     useState(false);
-  const [moves, setMoves] = useState(0);
-  const [bestScore, setBestScore] = useLocalStorage("best-score");
+/*   const [moves, setMoves] = useState(0);
+ */  const [bestScore, setBestScore] = useLocalStorage("best-score");
 
   /********DUPLICATING CARDS *********/
 
@@ -53,8 +53,8 @@ export const useCardGameLogic = () => {
 
     setFlippedCards([]);
     setGameOver(false);
-    setMoves(0);
-
+/*     setMoves(0);
+ */
   };
 
   useEffect(() => {
@@ -73,8 +73,8 @@ export const useCardGameLogic = () => {
     setCards(shuffledAndDuplicatedCards);
     setFlippedCards([]);
     setGameOver(false);
-    setMoves(0);
-  };
+/*     setMoves(0);
+ */  };
   
   /******** HANDLE CARD CLICK *********/
 
@@ -93,17 +93,20 @@ export const useCardGameLogic = () => {
       setFlippedCards(updatedFlippedCards);
 
       if (updatedFlippedCards.length === 2) {
-        setMoves((prevMoves) => prevMoves + 1);
-        setTimeout(() => {
+/*         setMoves((prevMoves) => prevMoves + 1);
+ */        setTimeout(() => {
           checkMatch(updatedFlippedCards);
         }, 750);
-      }
-        /********SAVING BEST SCORE*********/
+      } }     
+  };
 
-        if ( moves < Number(bestScore)) {
-          setBestScore(moves.toString());
-          localStorage.setItem("best-score", moves.toString());
-        } }
+  /********SAVING BEST SCORE*********/
+
+  const handleBestScore = (pairsGuessed: number) => {
+    if (pairsGuessed > Number(bestScore)) {
+      setBestScore(pairsGuessed.toString());
+      localStorage.setItem("best-score", pairsGuessed.toString());
+    }
   };
 
   /********COMPARE CARDS *********/
@@ -128,6 +131,7 @@ export const useCardGameLogic = () => {
       if (updatedCards.every((card) => card.matched)) {
         setGameOver(true);
         setShowCongratulationsModal(true);
+        handleBestScore(updatedCards.length / 2);
       }
     } else {
       const updatedCards = cards.map((card, index) => {
@@ -147,8 +151,8 @@ export const useCardGameLogic = () => {
     flippedCards,
     gameOver,
     showCongratulationsModal,
-    moves,
-    bestScore,
+/*     moves,
+ */    bestScore,
     handleClick,
     resetGame,
     restartGame: startNewGame,

@@ -40,3 +40,60 @@
     max-height: 100%;
     object-fit: contain;
   }
+
+  .custom-row {
+    padding: 1rem; 
+    padding-bottom: 0rem;
+    border-radius: 5px;
+  }
+  
+  .custom-row p {
+    background-color:var(--bs-danger); 
+    color: white; 
+    font-weight: bold; 
+    padding: 0.7rem; 
+    border-radius: 5px; 
+  }
+
+
+
+  @media (max-width: 768px) {
+    .game-card {
+      width: 5rem;
+      height: 4rem;
+    }
+    
+    .card-content .card-back,
+    .card-content .card-image {
+      width: 4rem;
+      height: 4rem;
+    }
+  }
+
+  
+  @media (max-width: 992px) {
+    .game-card {
+      width: 7rem;
+      height: 6rem;
+    }
+    
+    .card-content .card-back,
+    .card-content .card-image {
+      width: 6rem;
+      height: 6rem;
+    }
+  }
+
+  
+  @media (max-width: 1200px) {
+    .game-card {
+      width: 9rem;
+      height: 6rem;
+    }
+    
+    .card-content .card-back,
+    .card-content .card-image {
+      width: 6rem;
+      height: 6rem;
+    }
+  }

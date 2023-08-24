@@ -75,7 +75,7 @@ const {
       </Row>
       {gameOver && (
         <div className="text-center mt-4">
-          <ModalEnding show={showCongratulationsModal} onClose={() => resetGame()} />
+          <ModalEnding show={showCongratulationsModal}pairsGuessed={pairsGuessed} onClose={() => resetGame()} />
         </div>
       )}
     </Container>

@@ -11,7 +11,7 @@ export const useCardGameLogic = () => {
     useState(false);
 /*   const [moves, setMoves] = useState(0);
  */  const [bestScore, setBestScore] = useLocalStorage("best-score");
-
+ const [pairsFound, setPairsFound] = useState(0);
   /********DUPLICATING CARDS *********/
 
   const duplicateCards = (array: CardData[]) => {
@@ -127,12 +127,28 @@ export const useCardGameLogic = () => {
       setCards(updatedCards);
 
       setFlippedCards([]);
-
-      if (updatedCards.every((card) => card.matched)) {
+      const newPairsFound = updatedCards.filter((card) => card.matched).length / 2;
+      setPairsFound(newPairsFound);
+  
+      // Check if there's only one unmatched pair left
+      if (newPairsFound === cards.length / 2 - 1) {
+        setGameOver(true);
+        setShowCongratulationsModal(true);
+  
+        // Update best score only if the current game's pairsFound is higher
+        if (newPairsFound + 1 > Number(bestScore)) {
+          handleBestScore(newPairsFound + 1);
+        }}
+   /*    const pairsFound = updatedCards.filter((card) => card.matched).length / 2;
+      if (pairsFound === cards.length / 2 - 1) {
+        setGameOver(true);
+        setShowCongratulationsModal(true);
+        handleBestScore(pairsFound + 1); } */
+   /*    if (updatedCards.every((card) => card.matched)) {
         setGameOver(true);
         setShowCongratulationsModal(true);
         handleBestScore(updatedCards.length / 2);
-      }
+      } */
     } else {
       const updatedCards = cards.map((card, index) => {
         if (index === firstIndex || index === secondIndex) {

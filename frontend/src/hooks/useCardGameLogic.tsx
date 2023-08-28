@@ -58,7 +58,7 @@ export const useCardGameLogic = () => {
   };
 
   useEffect(() => {
-    startNewGame('programming'); // Automatically start a new game when the component mounts
+    startNewGame('superhero'); 
   }, []);
 
   /********RESET GAME AT THE END*********/

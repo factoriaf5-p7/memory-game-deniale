@@ -3,6 +3,7 @@ import {PrimaryButton} from "../components/buttons/PrimaryButton"
 import { Container, Row, Col} from "react-bootstrap"
 import { UserForm } from "../components/UserForm";
 import { Link } from "react-router-dom";
+import { HeroImage } from "../components/HeroImage";
 
 export const Landing= () => {
   return (
@@ -27,8 +28,7 @@ export const Landing= () => {
           </Link>
         </Col>
       </Row>
+      <HeroImage />
     </Container>
   );
 };
-
-

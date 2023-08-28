@@ -9,9 +9,9 @@ export const useCardGameLogic = () => {
   const [gameOver, setGameOver] = useState(false);
   const [showCongratulationsModal, setShowCongratulationsModal] =
     useState(false);
-  const [moves, setMoves] = useState(0);
-  const [bestScore, setBestScore] = useLocalStorage("best-score");
-
+/*   const [moves, setMoves] = useState(0);
+ */  const [bestScore, setBestScore] = useLocalStorage("best-score");
+ const [pairsFound, setPairsFound] = useState(0);
   /********DUPLICATING CARDS *********/
 
   const duplicateCards = (array: CardData[]) => {
@@ -53,12 +53,12 @@ export const useCardGameLogic = () => {
 
     setFlippedCards([]);
     setGameOver(false);
-    setMoves(0);
-
+/*     setMoves(0);
+ */
   };
 
   useEffect(() => {
-    startNewGame('superhero'); // Automatically start a new game when the component mounts
+    startNewGame('programming'); // Automatically start a new game when the component mounts
   }, []);
 
   /********RESET GAME AT THE END*********/
@@ -73,8 +73,8 @@ export const useCardGameLogic = () => {
     setCards(shuffledAndDuplicatedCards);
     setFlippedCards([]);
     setGameOver(false);
-    setMoves(0);
-  };
+/*     setMoves(0);
+ */  };
   
   /******** HANDLE CARD CLICK *********/
 
@@ -93,17 +93,19 @@ export const useCardGameLogic = () => {
       setFlippedCards(updatedFlippedCards);
 
       if (updatedFlippedCards.length === 2) {
-        setMoves((prevMoves) => prevMoves + 1);
-        setTimeout(() => {
+/*         setMoves((prevMoves) => prevMoves + 1);
+ */        setTimeout(() => {
           checkMatch(updatedFlippedCards);
         }, 750);
-      }
-        /********SAVING BEST SCORE*********/
+      } }     
+  };
 
-      if (moves > Number(bestScore)) {
-        setBestScore(moves.toString());
-        localStorage.setItem("best-score", moves.toString());
-      }
+  /********SAVING BEST SCORE*********/
+
+  const handleBestScore = (pairsGuessed: number) => {
+    if (pairsGuessed > Number(bestScore)) {
+      setBestScore(pairsGuessed.toString());
+      localStorage.setItem("best-score", pairsGuessed.toString());
     }
   };
 
@@ -125,11 +127,28 @@ export const useCardGameLogic = () => {
       setCards(updatedCards);
 
       setFlippedCards([]);
-
-      if (updatedCards.every((card) => card.matched)) {
+      const newPairsFound = updatedCards.filter((card) => card.matched).length / 2;
+      setPairsFound(newPairsFound);
+  
+      // Check if there's only one unmatched pair left
+      if (newPairsFound === cards.length / 2 - 1) {
         setGameOver(true);
         setShowCongratulationsModal(true);
-      }
+  
+        // Update best score only if the current game's pairsFound is higher
+        if (newPairsFound + 1 > Number(bestScore)) {
+          handleBestScore(newPairsFound + 1);
+        }}
+   /*    const pairsFound = updatedCards.filter((card) => card.matched).length / 2;
+      if (pairsFound === cards.length / 2 - 1) {
+        setGameOver(true);
+        setShowCongratulationsModal(true);
+        handleBestScore(pairsFound + 1); } */
+   /*    if (updatedCards.every((card) => card.matched)) {
+        setGameOver(true);
+        setShowCongratulationsModal(true);
+        handleBestScore(updatedCards.length / 2);
+      } */
     } else {
       const updatedCards = cards.map((card, index) => {
         if (index === firstIndex || index === secondIndex) {
@@ -148,8 +167,8 @@ export const useCardGameLogic = () => {
     flippedCards,
     gameOver,
     showCongratulationsModal,
-    moves,
-    bestScore,
+/*     moves,
+ */    bestScore,
     handleClick,
     resetGame,
     restartGame: startNewGame,

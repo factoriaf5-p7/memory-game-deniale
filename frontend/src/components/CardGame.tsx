@@ -6,9 +6,10 @@ import Image from "react-bootstrap/Image";
 import { PrimaryButton } from "./buttons/PrimaryButton";
 import { ModalEnding } from "./ModalEnding";
 import Col from "react-bootstrap/Col";
-import { MoveCounter } from "./cards/MoveCounter";
+import { PairsCounter } from "./cards/PairsCounter";
 import { HighScore } from "./cards/HighScore";
 import { useCardGameLogic } from "../hooks/useCardGameLogic";
+import "../styles/CardGame.css"
 
 export interface CardData {
   _id: string;
@@ -27,22 +28,28 @@ const {
     cards,
     gameOver,
     showCongratulationsModal,
-    moves,
-    bestScore,
+/*     moves,
+ */    bestScore,
     handleClick,
     restartGame,
     resetGame
   } = useCardGameLogic();
 
-
+  const pairsGuessed = cards.filter((card) => card.matched).length / 2;
   
   return (
-    <Container className="mt-4">
+    <Container className="mt-4" style={({marginBottom: "4rem"})}>
       <h1 className="text-center">Memory Card Game</h1>
       <PrimaryButton onClick={resetGame}>Reset</PrimaryButton>
-      <MoveCounter moves={moves} />
-      <HighScore bestScore={bestScore} />
-      <Row xs={2} md={4} className="g-4" data-testid="card">
+      <Row className="justify-content-around custom-row mt-4 mb-4" >
+        <Col sm={4} md={6} >
+          <PairsCounter pairsGuessed={pairsGuessed} />
+        </Col>
+        <Col sm={4} md={6}>
+          <HighScore bestScore={bestScore} />
+        </Col>
+      </Row>
+      <Row sm={3} md={4} lg={6} className="g-4" data-testid="card">
         {cards.map((card, index) => (
           <Col key={index}>
             <Card
@@ -56,7 +63,9 @@ const {
                   {card.flipped ? (
                     <Image src={card.url} className="card-image" />
                   ) : (
-                    <div className="card-back">?</div>
+                    <Image src="https://res.cloudinary.com/dqlu4lleo/image/upload/v1692801956/superhero-game/zyxcxdkdmiixeydwlpf1.png" alt="Memory icon by Icons8
+
+                    "className="card-back"/>
                   )}
                 </div>
               </Card.Body>
@@ -66,7 +75,7 @@ const {
       </Row>
       {gameOver && (
         <div className="text-center mt-4">
-          <ModalEnding show={showCongratulationsModal} onClose={() => resetGame()} />
+          <ModalEnding show={showCongratulationsModal}pairsGuessed={pairsGuessed} onClose={() => resetGame()} />
         </div>
       )}
     </Container>

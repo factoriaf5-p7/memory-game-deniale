@@ -2,9 +2,10 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 const getValue = (key: string): string => {
   if (typeof window !== "undefined") {
-    return window.localStorage.getItem(key) || "0";
+    const storedValue = window.localStorage.getItem(key);
+    return storedValue !== null ? storedValue : "0";
   }
-  return "";
+  return "0";
 };
 
 type useLocalStorageType = [string, Dispatch<SetStateAction<string>>];
@@ -16,10 +17,17 @@ export const useLocalStorage = function (key: string): useLocalStorageType {
   // Get the value saved on localStorage
   const [value, setValue] = useState(() => getValue(key));
 
-  // Set on localStorage the state every time the value change
+  // Set on localStorage the state every time the value changes
   useEffect(() => {
     localStorage.setItem(key, value);
   }, [value]);
+
+  useEffect(() => {
+    const storedValue = getValue(key);
+    if (storedValue !== value) {
+      setValue(storedValue);
+    }
+  }, [key]);
 
   return [value, setValue];
 };

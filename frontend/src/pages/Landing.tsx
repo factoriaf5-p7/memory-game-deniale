@@ -1,6 +1,6 @@
 //despues de la animación pedir name y avatar, button start
 import {PrimaryButton} from "../components/buttons/PrimaryButton"
-import { Container, Row, Col} from "react-bootstrap"
+import { Container, Row, Col, Button} from "react-bootstrap"
 import { UserForm } from "../components/UserForm";
 import { Link } from "react-router-dom";
 import { HeroImage } from "../components/HeroImage";
@@ -24,7 +24,7 @@ export const Landing= () => {
           className="d-flex flex-column align-items-center justify-content-center"
         >
           <Link to="/game">
-            <PrimaryButton>Go to Game</PrimaryButton>
+            <Button className="button pulsate">Go to Game</Button>
           </Link>
         </Col>
       </Row>

@@ -1,3 +1,5 @@
+
+
 .hero-image-container {
     position: fixed;
     top: 0;
@@ -5,20 +7,28 @@
     width: 100vw;
     height: 100vh;
     z-index: 9999;
-    pointer-events: none; /* Disable pointer events for the container */
-  }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    background-color: white;
+    transition: background-color 2s ease-in-out, opacity 2s ease-in-out; /* Add opacity transition */
+}
   
   .hero-image {
-    width: 100%;
+    width: auto; 
     height: 100%;
-    background-image: url('heroimage.jpg');
-    background-size: cover;
-    background-position: left;
+    background-color: white;
     opacity: 1;
-    transition: opacity 2s ease-in-out, background-position 2s ease-in-out;
+    transition: opacity 2s ease-in-out, background-color 2s ease-in-out;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+
   }
   
-  .hero-image.fade-out {
+  .hero-image-container.fade-out, .hero-image.fade-out {
+    background-color: transparent;
     opacity: 0;
-    pointer-events: none; /* Disable pointer events during fade-out */
+    pointer-events: none;
   }

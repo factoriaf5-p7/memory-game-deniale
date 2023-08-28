@@ -1,6 +1,6 @@
-body{
-    background-image: url('https://res.cloudinary.com/dqlu4lleo/image/upload/v1692697943/superhero-game/nq1xj4js9xypnytz61sx.jpg');
-    background-repeat: repeat;
+body {
+  background-image: url('https://res.cloudinary.com/dqlu4lleo/image/upload/v1692697943/superhero-game/nq1xj4js9xypnytz61sx.jpg');
+  background-repeat: repeat;
 }
 
 
@@ -23,14 +23,66 @@ $danger: #DE3C4B;
 $light: #89FC00;
 $dark: #000022;
 
-$color-mode-type: data;
+$color-mode-type: data; 
 
-:root[data-bs-theme="light"]{
+
+:root[data-bs-theme="light"] {
   --bs-body-bg: var(--bs-primary)
 }
 
-:root[data-bs-theme="dark"]{
-    --bs-body-bg: var(--bs-dark)
+:root[data-bs-theme="dark"] {
+  --bs-body-bg: var(--bs-dark)
+}
+
+.button {
+  color: white;
+  font-family: Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 40px;
+  text-decoration: none;
+  background-color: #7B8CDE;
+  display: block;
+  position: relative;
+  padding: 20px 40px;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  text-shadow: 0px 1px 0px #000;
+  -webkit-box-shadow: inset 0 1px 0 #FFE5C4, 0 10px 0 #E28413;
+  -moz-box-shadow: inset 0 1px 0 #FFE5C4, 0 10px 0 #E28413;
+  box-shadow: inset 0 1px 0 #FFE5C4, 0 10px 0 #E28413;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  transform: translateZ(0);
+  transition: background-color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+.pulsate {
+  width: 12rem;
+  height: 3rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  animation: pulsateAnimation 2s ease infinite;
+}
+
+@keyframes pulsateAnimation {
+  0% {
+    transform: scale(1);
   }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.button:hover {
+  background-color: #E28413;
+  transform: scale(1.2) translateZ(0);
+}
+
+.button:focus {
+  outline: none;
+}
 
 @import "node_modules/bootstrap/scss/bootstrap";

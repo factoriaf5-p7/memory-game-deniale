@@ -3,16 +3,24 @@ import { useState, useEffect } from "react";
 import { Card, CardData } from "../components/CardGame";
 import { useLocalStorage } from "./useLocalStorage";
 
+
 export const useCardGameLogic = () => {
   const [cards, setCards] = useState<Card[]>([]);
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [gameOver, setGameOver] = useState(false);
   const [showCongratulationsModal, setShowCongratulationsModal] =
     useState(false);
-/*   const [moves, setMoves] = useState(0);
- */  const [bestScore, setBestScore] = useLocalStorage("best-score");
- const [pairsFound, setPairsFound] = useState(0);
-  /********DUPLICATING CARDS *********/
+  const [bestScore, setBestScore] = useLocalStorage("best-score");
+  const [pairsFound, setPairsFound] = useState(0);
+  const [currentTheme, setCurrentTheme] = useState<string>("superhero");
+  const [currentDifficulty, setCurrentDifficulty] = useState<string>("easy");
+
+  const difficultyLevels = [
+    { level: "easy", pairs: 6 },
+    { level: "medium", pairs: 9 },
+    { level: "hard", pairs: 12 },
+  ];
+  const themeOptions = ["superhero", "programming"];
 
   const duplicateCards = (array: CardData[]) => {
     return array.flatMap((card) => [
@@ -43,23 +51,27 @@ export const useCardGameLogic = () => {
 
   /********STARTING NEW GAME*********/
 
-  const startNewGame = (theme:string) => {
-    axios.get(`http://localhost:3000/game?category=${theme}`).then((response) => {
-      const fetchedCards: CardData[] = response.data;
-      const duplicatedCards = duplicateCards(fetchedCards);
-      const shuffledAndDuplicatedCards = shuffleCards(duplicatedCards);
-      setCards(shuffledAndDuplicatedCards);
-    });
+  const startNewGame = (difficulty: string) => {
+    const selectedDifficulty = difficultyLevels.find(
+      (level) => level.level === difficulty
+    );
+
+    if (selectedDifficulty) {
+      const selectedPairs = selectedDifficulty.pairs;
+
+      axios.get(`http://localhost:3000/game?category=${currentTheme}`)
+        .then((response) => {
+          const fetchedCards: Card[] = response.data;
+          const shuffledFetchedCards = shuffleCards(fetchedCards);
+          const duplicatedCards = duplicateCards(shuffledFetchedCards).slice(0, selectedPairs * 2);
+          const shuffledAndDuplicatedCards = shuffleCards(duplicatedCards);
+          setCards(shuffledAndDuplicatedCards);
+        });
+    }
 
     setFlippedCards([]);
     setGameOver(false);
-/*     setMoves(0);
- */
   };
-
-  useEffect(() => {
-    startNewGame('superhero'); 
-  }, []);
 
   /********RESET GAME AT THE END*********/
 
@@ -73,10 +85,9 @@ export const useCardGameLogic = () => {
     setCards(shuffledAndDuplicatedCards);
     setFlippedCards([]);
     setGameOver(false);
-/*     setMoves(0);
- */  };
-  
-  /******** HANDLE CARD CLICK *********/
+  };
+
+  /******** HANDLE CARD CLICK *********/  
 
   const handleClick = (index: number) => {
     if (flippedCards.length < 2 && !cards[index].matched) {
@@ -93,8 +104,7 @@ export const useCardGameLogic = () => {
       setFlippedCards(updatedFlippedCards);
 
       if (updatedFlippedCards.length === 2) {
-/*         setMoves((prevMoves) => prevMoves + 1);
- */        setTimeout(() => {
+       setTimeout(() => {
           checkMatch(updatedFlippedCards);
         }, 750);
       } }     
@@ -130,25 +140,14 @@ export const useCardGameLogic = () => {
       const newPairsFound = updatedCards.filter((card) => card.matched).length / 2;
       setPairsFound(newPairsFound);
   
-      // Check if there's only one unmatched pair left
       if (newPairsFound === cards.length / 2 - 1) {
         setGameOver(true);
         setShowCongratulationsModal(true);
   
-        // Update best score only if the current game's pairsFound is higher
         if (newPairsFound + 1 > Number(bestScore)) {
           handleBestScore(newPairsFound + 1);
         }}
-   /*    const pairsFound = updatedCards.filter((card) => card.matched).length / 2;
-      if (pairsFound === cards.length / 2 - 1) {
-        setGameOver(true);
-        setShowCongratulationsModal(true);
-        handleBestScore(pairsFound + 1); } */
-   /*    if (updatedCards.every((card) => card.matched)) {
-        setGameOver(true);
-        setShowCongratulationsModal(true);
-        handleBestScore(updatedCards.length / 2);
-      } */
+
     } else {
       const updatedCards = cards.map((card, index) => {
         if (index === firstIndex || index === secondIndex) {
@@ -161,16 +160,24 @@ export const useCardGameLogic = () => {
       setFlippedCards([]);
     }
   };
+  useEffect(() => {
+    startNewGame(currentDifficulty);
+  }, [currentTheme, currentDifficulty]);
 
   return {
-    cards,
-    flippedCards,
-    gameOver,
-    showCongratulationsModal,
-/*     moves,
- */    bestScore,
-    handleClick,
-    resetGame,
+      cards,
+      flippedCards,
+      gameOver,
+      showCongratulationsModal,
+      bestScore,
+      currentTheme,
+      setCurrentTheme,
+      currentDifficulty,
+      setCurrentDifficulty,
+      handleClick,
+      resetGame,
+      themeOptions,
+      difficultyLevels, 
     restartGame: startNewGame,
-  };
 };
+}

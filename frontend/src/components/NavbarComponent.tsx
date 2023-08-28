@@ -3,8 +3,10 @@
 import { Col, Container, Navbar, Row } from 'react-bootstrap'
 
 export const NavbarComponent = () => {
-  const storedUserName = localStorage.getItem("userName");
-  const storedUserImage = localStorage.getItem("userImage");
+
+  
+  const storedUserName = localStorage.getItem('userName');
+  const storedUserImage = localStorage.getItem('userImage');
 
   return (
     <Navbar data-testid="navbar" style={({paddingTop: "0rem"})} >

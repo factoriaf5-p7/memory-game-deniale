@@ -14,7 +14,7 @@ export const HeroImage = () => {
     }, []);
   
     return (
-      <div className={`hero-image-container ${fadeOut ? "fade-out" : ""}`}>
+      <div data-testid="hero-image" className={`hero-image-container ${fadeOut ? "fade-out" : ""}`}>
         <div className={`hero-image ${fadeOut ? "fade-out" : ""}`}>
           <Player
             src="https://lottie.host/bd9e55a7-3825-4079-99f0-1ea05434cca3/oi4LG2hfTq.json"

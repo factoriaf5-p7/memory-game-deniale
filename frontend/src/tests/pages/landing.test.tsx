@@ -28,4 +28,16 @@ describe('Landing', () => {
     expect(formComponent).toBeInTheDocument();
     screen.debug();
   });
+
+  it('renders the hero image', () => {
+    render(
+      <MemoryRouter>
+        <Landing />
+      </MemoryRouter>
+    );
+
+    const heroImage = screen.getByTestId('hero-image');
+    expect(heroImage).toBeInTheDocument();
+    screen.debug();
+  });
 });

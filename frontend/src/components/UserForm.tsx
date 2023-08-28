@@ -31,7 +31,7 @@ export interface UserData {
           "http://localhost:3000/user",
           { name }
         );
-  
+   
         if (response.status === 201) {
           const userData = response.data;
           localStorage.setItem("userName", userData.name);
@@ -44,7 +44,7 @@ export interface UserData {
         );
         setShowAlert(true);
       }
-    };
+    }; 
   
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
@@ -73,7 +73,7 @@ export interface UserData {
           clearTimeout(timer);
         };
       }
-    }, [showAlert]);
+    }, [showAlert]);  
   
     return (
         <Container>
@@ -91,7 +91,7 @@ export interface UserData {
                   onChange={(e) => {
                     setName(e.target.value);
                     setShowAlert(false);
-                  }}
+                  }} 
                   required
                   disabled={isNameSaved}
                   className="styled-input"
@@ -99,12 +99,14 @@ export interface UserData {
               </Form.Group>
     
               <Form.Group className="mb-3">
-                <Form.Label>Upload Image:</Form.Label>
+                <Form.Label htmlFor="uploadImage">Upload Image:</Form.Label>
                 <Form.Control
                   type="file"
                   accept="image/*"
+                  id="uploadImage"
                   onChange={handleImageUpload}
                   className="styled-input"
+                  alt="uploaded"
                 />
               </Form.Group>
     
@@ -139,4 +141,4 @@ export interface UserData {
           </div>
         </Container>
       );
-    };
+    }; 

@@ -1,17 +1,15 @@
 import { describe, test, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { MoveCounter } from '../../../components/cards/PairsCounter';
+import { PairsCounter } from '../../../components/cards/PairsCounter'; 
 
-describe('Moves counter component', () => {
+describe('Pairs counter component', () => {
   test('renders how many times a pair is guessed', () => {
-    const providedBestScore = 5; 
-    render(<MoveCounter moves={providedBestScore} />);
+    const providedPairsGuessed = 5; 
+    render(<PairsCounter pairsGuessed={providedPairsGuessed} />);
     
-    const bestScoreElement = screen.getByTestId('moves') as HTMLElement;
-    expect(bestScoreElement.textContent).toBe('Moves: 5');
+    const pairsCounterElement = screen.getByTestId('moves') as HTMLElement; 
+    expect(pairsCounterElement.textContent).toBe('Pairs: 5'); 
     
     screen.debug();
   });
-
-
 });

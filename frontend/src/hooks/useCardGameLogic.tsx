@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { Card, CardData } from "../components/CardGame";
 import { useLocalStorage } from "./useLocalStorage";
 
-
 export const useCardGameLogic = () => {
   const [cards, setCards] = useState<Card[]>([]);
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
@@ -59,11 +58,15 @@ export const useCardGameLogic = () => {
     if (selectedDifficulty) {
       const selectedPairs = selectedDifficulty.pairs;
 
-      axios.get(`http://localhost:3000/game?category=${currentTheme}`)
+      axios
+        .get(`http://localhost:3000/game?category=${currentTheme}`)
         .then((response) => {
           const fetchedCards: Card[] = response.data;
           const shuffledFetchedCards = shuffleCards(fetchedCards);
-          const duplicatedCards = duplicateCards(shuffledFetchedCards).slice(0, selectedPairs * 2);
+          const duplicatedCards = duplicateCards(shuffledFetchedCards).slice(
+            0,
+            selectedPairs * 2
+          );
           const shuffledAndDuplicatedCards = shuffleCards(duplicatedCards);
           setCards(shuffledAndDuplicatedCards);
         });
@@ -74,7 +77,6 @@ export const useCardGameLogic = () => {
   };
 
   /********RESET GAME AT THE END*********/
-
 
   const resetGame = () => {
     const shuffledAndDuplicatedCards = shuffleCards(cards).map((card) => ({
@@ -87,7 +89,7 @@ export const useCardGameLogic = () => {
     setGameOver(false);
   };
 
-  /******** HANDLE CARD CLICK *********/  
+  /******** HANDLE CARD CLICK *********/
 
   const handleClick = (index: number) => {
     if (flippedCards.length < 2 && !cards[index].matched) {
@@ -104,10 +106,11 @@ export const useCardGameLogic = () => {
       setFlippedCards(updatedFlippedCards);
 
       if (updatedFlippedCards.length === 2) {
-       setTimeout(() => {
+        setTimeout(() => {
           checkMatch(updatedFlippedCards);
         }, 750);
-      } }     
+      }
+    }
   };
 
   /********SAVING BEST SCORE*********/
@@ -137,17 +140,18 @@ export const useCardGameLogic = () => {
       setCards(updatedCards);
 
       setFlippedCards([]);
-      const newPairsFound = updatedCards.filter((card) => card.matched).length / 2;
+      const newPairsFound =
+        updatedCards.filter((card) => card.matched).length / 2;
       setPairsFound(newPairsFound);
-  
+
       if (newPairsFound === cards.length / 2 - 1) {
         setGameOver(true);
         setShowCongratulationsModal(true);
-  
+
         if (newPairsFound + 1 > Number(bestScore)) {
           handleBestScore(newPairsFound + 1);
-        }}
-
+        }
+      }
     } else {
       const updatedCards = cards.map((card, index) => {
         if (index === firstIndex || index === secondIndex) {
@@ -165,19 +169,19 @@ export const useCardGameLogic = () => {
   }, [currentTheme, currentDifficulty]);
 
   return {
-      cards,
-      flippedCards,
-      gameOver,
-      showCongratulationsModal,
-      bestScore,
-      currentTheme,
-      setCurrentTheme,
-      currentDifficulty,
-      setCurrentDifficulty,
-      handleClick,
-      resetGame,
-      themeOptions,
-      difficultyLevels, 
+    cards,
+    flippedCards,
+    gameOver,
+    showCongratulationsModal,
+    bestScore,
+    currentTheme,
+    setCurrentTheme,
+    currentDifficulty,
+    setCurrentDifficulty,
+    handleClick,
+    resetGame,
+    themeOptions,
+    difficultyLevels,
     restartGame: startNewGame,
+  };
 };
-}

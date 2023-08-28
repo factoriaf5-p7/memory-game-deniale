@@ -1,8 +1,7 @@
 import { describe, expect, test } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import {CardGame} from '../../components/CardGame';
-
-
+import userEvent from '@testing-library/user-event'
 
 describe('Card Game', () => {
     test('renders a card', () => {
@@ -14,23 +13,24 @@ describe('Card Game', () => {
       screen.debug()
     });
 
-    test('Fetch the images array', () => {
-      render(<CardGame/>);
-       
-      const cardElement = screen.getByTestId('card');    
-      expect(cardElement).toBeInTheDocument();
-     
-      screen.debug()
+    test('renders the theme and difficulty dropdowns', () => {
+      render(<CardGame />);
+    
+      const themeDropdown = screen.getByRole('button', { name: /Theme:/i });
+      expect(themeDropdown).toBeInTheDocument();
+  
+      const difficultyDropdown = screen.getByRole('button', { name: /Difficulty:/i });
+      expect(difficultyDropdown).toBeInTheDocument();
+  
+      screen.debug();
     });
-
     test('handles card clicks and updates game state', () => {
       render(<CardGame />);
       
       const cardElement = screen.getByTestId('card');
       expect(cardElement).toBeInTheDocument();
       
-      fireEvent.click(cardElement); // Click on a card
-      // Assert that the game state has been updated as expected
+      userEvent.click(cardElement); 
     });
     
     test('resets the game state when Reset button is clicked', () => {
@@ -39,7 +39,31 @@ describe('Card Game', () => {
       const resetButton = screen.getByText('Reset');
       expect(resetButton).toBeInTheDocument();
       
-      fireEvent.click(resetButton); // Click the Reset button
-      // Assert that the game state has been properly reset
+      userEvent.click(resetButton); 
   });
-})
+ test('handles theme change through dropdown', () => {
+    render(<CardGame />);
+  
+    const themeDropdown = screen.getByRole('button', { name: /Theme:/i });
+    userEvent.click(themeDropdown);
+
+    const themeOption = screen.getByText((content, element) =>
+      content.startsWith('Theme:') && element.tagName.toLowerCase() === 'button'
+    );
+    userEvent.click(themeOption);
+
+  });
+
+  test('handles difficulty change through dropdown', () => {
+    render(<CardGame />);
+  
+    const difficultyDropdown = screen.getByRole('button', { name: /Difficulty:/i });
+    userEvent.click(difficultyDropdown);
+
+    const difficultyOption = screen.getByText((content, element) =>
+      content.startsWith('Difficulty:') && element.tagName.toLowerCase() === 'button'
+    );
+    userEvent.click(difficultyOption);
+
+  });
+});

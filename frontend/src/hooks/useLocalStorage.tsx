@@ -10,14 +10,10 @@ const getValue = (key: string): string => {
 
 type useLocalStorageType = [string, Dispatch<SetStateAction<string>>];
 
-/**
- * localStorage state
- */
+
 export const useLocalStorage = function (key: string): useLocalStorageType {
-  // Get the value saved on localStorage
   const [value, setValue] = useState(() => getValue(key));
 
-  // Set on localStorage the state every time the value changes
   useEffect(() => {
     localStorage.setItem(key, value);
   }, [value]);

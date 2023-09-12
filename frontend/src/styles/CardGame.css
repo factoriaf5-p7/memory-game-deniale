@@ -1,0 +1,99 @@
+.game-card {
+    width: 11rem; 
+    height: 8rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    padding: 0.5rem;
+  }
+  
+  .game-card .card-content {
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+  }
+  
+  .game-card.flipped .card-content {
+    transform: rotateY(180deg);
+  }
+  
+  .card-content .card-back,
+  .card-content .card-image {
+    width: 8rem; 
+    height: 8rem;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card-back {
+    background-color: #f8f9fa; 
+  }
+  
+  .card-content .card-image {
+    transform: rotateY(180deg); 
+  }
+  
+  .card-content .card-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .custom-row {
+    padding: 1rem; 
+    padding-bottom: 0rem;
+    border-radius: 5px;
+  }
+  
+  .custom-row p {
+    background-color:var(--bs-danger); 
+    color: white; 
+    font-weight: bold; 
+    padding: 0.7rem; 
+    border-radius: 5px; 
+  }
+
+
+
+  @media (max-width: 768px) {
+    .game-card {
+      width: 5rem;
+      height: 4rem;
+    }
+    
+    .card-content .card-back,
+    .card-content .card-image {
+      width: 4rem;
+      height: 4rem;
+    }
+  }
+
+  
+  @media (max-width: 992px) {
+    .game-card {
+      width: 7rem;
+      height: 6rem;
+    }
+    
+    .card-content .card-back,
+    .card-content .card-image {
+      width: 6rem;
+      height: 6rem;
+    }
+  }
+
+  
+  @media (max-width: 1200px) {
+    .game-card {
+      width: 9rem;
+      height: 6rem;
+    }
+    
+    .card-content .card-back,
+    .card-content .card-image {
+      width: 6rem;
+      height: 6rem;
+    }
+  }
